@@ -17,9 +17,10 @@ import javax.swing.JButton;
 public class VentanaAhorcado extends javax.swing.JFrame {
 
     String palabraOculta = "CETYS"; //palabra a adivinar
-    String[] listaPalabras = {"BLANCA", "JORGE", "DAM", "PROGRAMACIÓN", "JAVA"};
+    String[] listaPalabras = {"BLANCA", "JORGE", "DAM", "PROGRAMACION", "JAVA"};
 
     int numeroFallos = 0;
+    String imagenGanar = "/imagenes/acertasteTodo.png";
 
     public VentanaAhorcado() {
         initComponents();
@@ -91,7 +92,9 @@ public class VentanaAhorcado extends javax.swing.JFrame {
                 break;
             default:
                 nombreImagen = nombreImagen = getClass().getResource("/imagenes/ahorcado_fin.png");
-                break;
+        }
+if (palabraOculta.equals(panelGuiones.getText())); {
+            panelAhorcado.setText(imagenGanar);
         }
 
         ImageIcon miImagen = new ImageIcon(new ImageIcon(nombreImagen).getImage().getScaledInstance(panelAhorcado.getWidth(), panelAhorcado.getHeight(), Image.SCALE_DEFAULT));
