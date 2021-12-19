@@ -6,6 +6,7 @@ package codigo;
 
 import java.awt.Image;
 import java.net.URL;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -14,12 +15,32 @@ import javax.swing.JButton;
  * @author Blanca
  */
 public class VentanaAhorcado extends javax.swing.JFrame {
-    
+
     String palabraOculta = "CETYS"; //palabra a adivinar
-//en esta primera versión del ahorcado, siempre es la misma palabra
+    String[] listaPalabras = {"BLANCA", "JORGE", "DAM", "PROGRAMACIÓN", "JAVA"};
 
     int numeroFallos = 0;
-    
+
+    public VentanaAhorcado() {
+        initComponents();
+        dibujaImagen(0);
+        palabraOculta = eligePalabraOculta(listaPalabras);
+        escribeGuionesEnPantalla();
+    }
+
+    private void escribeGuionesEnPantalla() {
+        String auxiliar = "";
+        for (int i = 0; i < (palabraOculta.length()); i++) {
+            auxiliar = auxiliar + "_ ";
+        }
+        panelGuiones.setText(auxiliar);
+    }
+
+    private String eligePalabraOculta(String[] lista) {
+        Random aleatorio = new Random();
+        return lista[aleatorio.nextInt(lista.length)];
+    }
+
     public void chequeaLetra(String letra) {
         letra = letra.toUpperCase(); //convierto la letra en mayúscula
         palabraOculta = palabraOculta.toUpperCase();
@@ -28,7 +49,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             for (int i = 0; i < palabraOculta.length(); i++) {
                 if (palabraOculta.charAt(i) == letra.charAt(0)) {
                     palabraConGuiones = palabraConGuiones.substring(0, 2 * i) + letra + palabraConGuiones.substring(2 * i + 1);
-                    
+
                 }
             }
             panelGuiones.setText(palabraConGuiones);
@@ -36,14 +57,14 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             numeroFallos++;
             dibujaImagen(numeroFallos);
         }
-        
+
     }
-    
+
     public void chequeaBoton(JButton miBoton) {
         miBoton.setEnabled(false);
         chequeaLetra(miBoton.getText());
     }
-    
+
     private void dibujaImagen(int numeroImagen) {
         URL nombreImagen = null;
         switch (numeroImagen) {
@@ -72,14 +93,9 @@ public class VentanaAhorcado extends javax.swing.JFrame {
                 nombreImagen = nombreImagen = getClass().getResource("/imagenes/ahorcado_fin.png");
                 break;
         }
-        
+
         ImageIcon miImagen = new ImageIcon(new ImageIcon(nombreImagen).getImage().getScaledInstance(panelAhorcado.getWidth(), panelAhorcado.getHeight(), Image.SCALE_DEFAULT));
         panelAhorcado.setIcon(miImagen);
-    }
-    
-    public VentanaAhorcado() {
-        initComponents();
-        dibujaImagen(0);
     }
 
     /**
